@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" role="img" aria-labelledby="titulo desc">
+  <title id="titulo">Orbit</title>
+  <desc id="desc">Um planeta de vidro iluminado por trás sobre fundo grafite, ao lado do nome Orbit e da frase: do briefing ao site no ar.</desc>
+  <defs>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ccd6de" stop-opacity="0.34"/>
+      <stop offset="0.55" stop-color="#ccd6de" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#ccd6de" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="corpo" cx="0.36" cy="0.30" r="0.85">
+      <stop offset="0" stop-color="#383e45"/>
+      <stop offset="0.6" stop-color="#23272c"/>
+      <stop offset="1" stop-color="#181b1f"/>
+    </radialGradient>
+    <linearGradient id="borda" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eaf0f5" stop-opacity="0.95"/>
+      <stop offset="0.45" stop-color="#ccd6de" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#75818d" stop-opacity="0.05"/>
+    </linearGradient>
+    <clipPath id="quadro"><rect width="1280" height="440" rx="28"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#quadro)">
+    <rect width="1280" height="440" fill="#1d2024"/>
+    <circle cx="1010" cy="220" r="300" fill="url(#halo)"/>
+    <path d="M 760 220 A 250 54 0 0 1 1260 220" fill="none" stroke="#ccd6de" stroke-opacity="0.22" stroke-width="1.5" transform="rotate(-14 1010 220)"/>
+    <circle cx="1010" cy="220" r="150" fill="url(#corpo)"/>
+    <circle cx="1010" cy="220" r="150" fill="none" stroke="url(#borda)" stroke-width="2"/>
+    <path d="M 760 220 A 250 54 0 0 0 1260 220" fill="none" stroke="#eaf0f5" stroke-opacity="0.6" stroke-width="1.75" transform="rotate(-14 1010 220)"/>
+    <circle cx="772" cy="284" r="5" fill="#eaf0f5"/>
+
+    <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Helvetica, Arial, sans-serif">
+      <text x="88" y="196" fill="#eaf0f5" font-size="92" font-weight="650" letter-spacing="-3">Orbit</text>
+      <text x="92" y="252" fill="#a9b3be" font-size="28" font-weight="400">Do briefing ao site no ar, com a IA no comando.</text>
+      <text x="92" y="330" fill="#75818d" font-size="20" font-weight="500" letter-spacing="0.5">Skill para Claude Code · método Word MNR</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,55 @@
+{
+  "$comentario": "Skills de terceiros que o método orbit usa. Cada uma é baixada da fonte original, na versão (commit) exata testada com o método. Para atualizar: troque o commit, rode `node ferramentas/baixar-skills.mjs --forcar` e confira com `node ferramentas/verificar.mjs --completo`.",
+  "versao": 1,
+  "fontes": [
+    {
+      "id": "taste-skill",
+      "repo": "Leonxlnx/taste-skill",
+      "commit": "af8a897996e159ccc89c9da535dff714d5dba62d",
+      "autor": "Leonxlnx",
+      "licenca": "MIT",
+      "arquivosLicenca": ["LICENSE"],
+      "site": "https://tasteskill.dev",
+      "skills": [
+        { "nome": "design-taste-frontend", "caminho": "skills/taste-skill", "papel": "Direção de arte, anti \"cara de IA\", inspector em navegador real, fotos livres" }
+      ]
+    },
+    {
+      "id": "impeccable",
+      "repo": "pbakaus/impeccable",
+      "commit": "6f269c4d8dec384388b386e2a130ff90d4f48de3",
+      "autor": "Paul Bakaus",
+      "licenca": "Apache-2.0",
+      "arquivosLicenca": ["LICENSE", "NOTICE.md"],
+      "site": "https://impeccable.style",
+      "skills": [
+        { "nome": "impeccable", "caminho": ".claude/skills/impeccable", "papel": "PRODUCT.md / DESIGN.md, crítica, auditoria, polimento, tipografia, cor, layout" }
+      ]
+    },
+    {
+      "id": "emil-skills",
+      "repo": "emilkowalski/skills",
+      "commit": "f1090bec277140d02ed202440185ad9d02ac1490",
+      "autor": "Emil Kowalski",
+      "licenca": "MIT",
+      "arquivosLicenca": ["LICENSE"],
+      "site": "https://emilkowal.ski/skill",
+      "skills": [
+        { "nome": "animate", "caminho": "skills/animate", "papel": "Decidir e escrever qualquer animação (propósito, curva, duração, interrupção)" },
+        { "nome": "apple-design", "caminho": "skills/apple-design", "papel": "Movimento físico com molas, vidro, profundidade, tipografia estilo Apple" },
+        { "nome": "emil-design-eng", "caminho": "skills/emil-design-eng", "papel": "Acabamento de componentes e detalhes invisíveis" },
+        { "nome": "animation-performance", "caminho": "skills/animation-performance", "papel": "Animação travando: propriedades baratas, camadas, will-change" },
+        { "nome": "animation-vocabulary", "caminho": "skills/animation-vocabulary", "papel": "Descobrir o nome de um efeito que o cliente descreve" },
+        { "nome": "find-animation-opportunities", "caminho": "skills/find-animation-opportunities", "papel": "Achar onde movimento ajuda (e onde não)" },
+        { "nome": "improve-animations", "caminho": "skills/improve-animations", "papel": "Auditar todas as animações e gerar planos de melhoria" },
+        { "nome": "review-animations", "caminho": "skills/review-animations", "papel": "Revisão rigorosa de animações" },
+        { "nome": "remove-animations", "caminho": "skills/remove-animations", "papel": "Enxugar animação demais" },
+        { "nome": "mobile-native", "caminho": "skills/mobile-native", "papel": "Sensação de app no celular (100vh, toque, zoom em campos, área segura)" },
+        { "nome": "break-ui", "caminho": "skills/break-ui", "papel": "Testar com dados extremos (nomes longos, vazio, emoji)" },
+        { "nome": "pick-ui-library", "caminho": "skills/pick-ui-library", "papel": "Escolher biblioteca de componentes" },
+        { "nome": "prototype", "caminho": "skills/prototype", "papel": "Prototipar rápido" },
+        { "nome": "ask-sonner", "caminho": "skills/ask-sonner", "papel": "Avisos (toasts) com Sonner" }
+      ]
+    }
+  ]
+}

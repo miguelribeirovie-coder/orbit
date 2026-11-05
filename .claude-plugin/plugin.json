@@ -1,0 +1,20 @@
+{
+  "name": "orbit",
+  "displayName": "Orbit (método Word MNR)",
+  "version": "1.0.0",
+  "description": "Do briefing ao site no ar: direção de arte, sistema de design, animação, revisão, desempenho no celular, segurança e publicação na Vercel, com as 16 melhores skills de design.",
+  "author": {
+    "name": "Word MNR",
+    "url": "https://github.com/miguelribeirovie-coder"
+  },
+  "homepage": "https://github.com/miguelribeirovie-coder/orbit",
+  "repository": "https://github.com/miguelribeirovie-coder/orbit",
+  "license": "MIT",
+  "keywords": ["site", "landing-page", "design", "frontend", "animacao", "vercel", "portugues"],
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["-y", "@jpisnice/shadcn-ui-mcp-server"]
+    }
+  }
+}

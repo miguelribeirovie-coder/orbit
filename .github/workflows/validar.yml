@@ -1,0 +1,63 @@
+name: validar
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  skill:
+    name: skill e instalador (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Conferir a skill (frontmatter, links, lock)
+        run: node skills/orbit/ferramentas/verificar.mjs
+
+      - name: Conferir os JSON
+        run: node -e "for (const f of ['.claude-plugin/plugin.json','.claude-plugin/marketplace.json','skills/orbit/skills.lock.json']) { JSON.parse(require('fs').readFileSync(f,'utf8')); console.log('ok', f) }"
+
+      - name: Instalar (skills de terceiros dentro do orbit)
+        run: node instalar.mjs --destino _teste --dentro
+
+      - name: Conferir a instalação completa
+        working-directory: _teste/orbit
+        run: node ferramentas/verificar.mjs --completo
+
+      - name: Instalador de uma linha (Mac e Linux)
+        if: runner.os != 'Windows'
+        run: sh instalar.sh --destino _teste_sh --dentro --apenas animate
+
+      - name: Instalador de uma linha (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./instalar.ps1 --destino _teste_ps --dentro --apenas animate
+
+  sem-git:
+    name: download sem git (tar.gz)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Instalar sem git no PATH
+        run: |
+          mkdir -p "$RUNNER_TEMP/bin"
+          ln -s "$(command -v node)" "$RUNNER_TEMP/bin/node"
+          ln -s "$(command -v tar)" "$RUNNER_TEMP/bin/tar"
+          ln -s "$(command -v gzip)" "$RUNNER_TEMP/bin/gzip"
+          PATH="$RUNNER_TEMP/bin" node instalar.mjs --destino _teste --dentro
+          node _teste/orbit/ferramentas/verificar.mjs --completo

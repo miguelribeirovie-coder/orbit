@@ -1,0 +1,47 @@
+name: novidades nas skills de terceiros
+
+# Toda segunda-feira confere se os autores publicaram versões novas das skills
+# usadas pelo método e abre (ou atualiza) uma issue com o resumo.
+on:
+  schedule:
+    - cron: "17 11 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  conferir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Comparar commits fixados com os mais novos
+        id: comparar
+        run: |
+          node --input-type=module <<'JS' > resumo.md
+          import fs from "node:fs";
+          import { execSync } from "node:child_process";
+          const lock = JSON.parse(fs.readFileSync("skills/orbit/skills.lock.json", "utf8"));
+          const linhas = [];
+          for (const f of lock.fontes) {
+            const novo = execSync(`git ls-remote https://github.com/${f.repo}.git HEAD`).toString().split(/\s/)[0];
+            if (novo && novo !== f.commit) {
+              linhas.push(`- **${f.repo}**: fixado em \`${f.commit.slice(0, 7)}\`, mais novo \`${novo.slice(0, 7)}\` ([diferenças](https://github.com/${f.repo}/compare/${f.commit}...${novo}))`);
+            }
+          }
+          if (linhas.length) {
+            console.log("Há versões novas das skills de terceiros:\n");
+            console.log(linhas.join("\n"));
+            console.log("\nAntes de trocar o commit no `skills.lock.json`, confira se os comandos citados pelo método continuam existindo (`node skills/orbit/ferramentas/verificar.mjs --completo` depois de instalar com `--mais-recente`). Veja CONTRIBUTING.md.");
+          }
+          JS
+          if [ -s resumo.md ]; then echo "novidades=sim" >> "$GITHUB_OUTPUT"; cat resumo.md >> "$GITHUB_STEP_SUMMARY"; else echo "Nada novo." >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: Abrir ou atualizar a issue
+        if: steps.comparar.outputs.novidades == 'sim'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          titulo="Novas versões das skills de terceiros"
+          numero=$(gh issue list --state open --search "in:title \"$titulo\"" --json number --jq '.[0].number')
+          if [ -n "$numero" ]; then gh issue edit "$numero" --body-file resumo.md; else gh issue create --title "$titulo" --body-file resumo.md; fi

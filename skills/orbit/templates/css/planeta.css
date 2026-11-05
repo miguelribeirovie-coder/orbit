@@ -1,0 +1,216 @@
+/* Planeta/anel de vidro iluminado por trás + palco preso na rolagem + frase no meio.
+   Usado com src/Hero.exemplo.tsx. Cores na paleta Grafite/Gelo/Névoa/Aço: troque pelas do cliente. */
+
+/* ───────────── Planeta de gelo nascendo atrás da demonstração + feixes de luz ─────────────
+   Fiel ao vídeo: um anel de vidro grosso, iluminado por trás. Ele sobe de trás da janela, a luz
+   corre pelo anel da esquerda para a direita, o miolo brilha perto do topo e uma névoa branca abre em cima. */
+@property --fire { syntax: "<angle>"; inherits: true; initial-value: 175deg; }
+@property --drift { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+@layer components {
+  .hero__grid { container-type: inline-size; }
+  .hero { padding-top: clamp(36px, 4vw, 56px); }
+  /* Espaço para a parte do anel que aparece acima da janela (22% do diâmetro). */
+  .stage { --orb-w: 0.92; --orb-v: 0.2; margin-top: calc(var(--stage-w) * var(--orb-w) * var(--orb-v) + 4px); }
+  .stage__tilt { z-index: 1; }
+  @media (min-width: 1000px) {
+    .stage { --orb-w: 0.84; margin-top: calc(var(--stage-w) * var(--orb-w) * var(--orb-v) + 4px); }
+  }
+
+  .orb {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 45%;
+    width: calc(var(--orb-w) * 100%);
+    aspect-ratio: 1;
+    translate: -50% -20%;
+    pointer-events: none;
+  }
+  @media (min-width: 1000px) { .orb { left: 50%; } }
+  .orb > span:not(.sparkles) { position: absolute; inset: 0; border-radius: 50%; }
+
+  /* Névoa branca que abre acima do anel. */
+  .orb__bloom {
+    inset: -14% 10% 66% !important;
+    background: radial-gradient(ellipse 50% 50% at 50% 80%, rgb(234 240 245 / 0.3), rgb(204 214 222 / 0.08) 55%, transparent 78%);
+    filter: blur(18px);
+  }
+  /* O miolo: escuro, com a luz que atravessa o anel brilhando perto do topo. */
+  .orb__hole {
+    inset: 8% !important;
+    background:
+      radial-gradient(58% 34% at 50% 0%, rgb(204 214 222 / 0.5), rgb(117 129 141 / 0.22) 42%, transparent 74%),
+      radial-gradient(circle at 50% 60%, #0d1013 55%, #161a1e 100%);
+  }
+  /* O vidro do anel: escuro e translúcido, com um fio de luz nas bordas (os lados ficam assim). */
+  .orb__glass {
+    background: radial-gradient(closest-side,
+      transparent 83.6%,
+      rgb(6 8 10 / 0.95) 84.2%,
+      rgb(234 240 245 / 0.22) 85.4%,
+      rgb(60 67 75 / 0.55) 87%,
+      rgb(117 129 141 / 0.3) 92%,
+      rgb(60 67 75 / 0.5) 96.5%,
+      rgb(234 240 245 / 0.42) 98.6%,
+      rgb(234 240 245 / 0.1) 99.4%,
+      transparent 100%);
+  }
+  /* A luz dentro do anel: forte no meio do tubo, mais fraca nas bordas, branca só no topo.
+     A máscara junta o formato do anel com a varredura (--fire), que corre da esquerda para a direita. */
+  .orb__fire,
+  .orb__fireglow {
+    background:
+      radial-gradient(16% 7% at 31% 9%, rgb(255 255 255 / 0.3), transparent 70%),
+      radial-gradient(12% 6% at 62% 4.5%, rgb(13 16 19 / 0.34), transparent 70%),
+      radial-gradient(14% 8% at 77% 12%, rgb(255 255 255 / 0.22), transparent 70%),
+      radial-gradient(10% 7% at 44% 3.5%, rgb(13 16 19 / 0.22), transparent 70%),
+      conic-gradient(from calc(-110deg + var(--drift)), transparent 0deg, rgb(117 129 141 / 0.35) 38deg, rgb(169 179 190 / 0.7) 66deg, rgb(204 214 222 / 0.95) 90deg, #f4f8fb 104deg, #f4f8fb 116deg, rgb(204 214 222 / 0.95) 132deg, rgb(169 179 190 / 0.65) 156deg, rgb(117 129 141 / 0.3) 184deg, transparent 214deg);
+  }
+  .orb__fire {
+    -webkit-mask-image: radial-gradient(closest-side, transparent 85%, rgb(0 0 0 / 0.45) 86.6%, #000 90.5%, #000 93.5%, rgb(0 0 0 / 0.55) 97%, transparent 98.8%), conic-gradient(from -78deg, #000 0deg, #000 var(--fire), transparent calc(var(--fire) + 28deg));
+    -webkit-mask-composite: source-in;
+    mask-image: radial-gradient(closest-side, transparent 85%, rgb(0 0 0 / 0.45) 86.6%, #000 90.5%, #000 93.5%, rgb(0 0 0 / 0.55) 97%, transparent 98.8%), conic-gradient(from -78deg, #000 0deg, #000 var(--fire), transparent calc(var(--fire) + 28deg));
+    mask-composite: intersect;
+    filter: blur(1.4px);
+  }
+  /* O mesmo brilho, borrado, transbordando do anel. */
+  .orb__fireglow {
+    inset: -6% !important;
+    -webkit-mask-image: radial-gradient(closest-side, transparent 72%, #000 84%, #000 90%, transparent 100%), conic-gradient(from -78deg, #000 0deg, #000 var(--fire), transparent calc(var(--fire) + 36deg));
+    -webkit-mask-composite: source-in;
+    mask-image: radial-gradient(closest-side, transparent 72%, #000 84%, #000 90%, transparent 100%), conic-gradient(from -78deg, #000 0deg, #000 var(--fire), transparent calc(var(--fire) + 36deg));
+    mask-composite: intersect;
+    filter: blur(16px);
+    opacity: 0.5;
+  }
+  /* A borda de cima, branca e quente, só no alto do anel. */
+  .orb__rim {
+    background: radial-gradient(closest-side, transparent 97.8%, #fff 98.9%, transparent 99.9%);
+    -webkit-mask-image: conic-gradient(from -50deg, transparent 0deg, #000 34deg, #000 66deg, transparent 100deg);
+    mask-image: conic-gradient(from -50deg, transparent 0deg, #000 34deg, #000 66deg, transparent 100deg);
+    filter: drop-shadow(0 -2px 8px rgb(234 240 245 / 0.9));
+  }
+  /* A metade de baixo do anel: acende devagar quando a janela sai da frente (opacidade vem da rolagem). */
+  .orb__low {
+    background: conic-gradient(from 60deg, transparent 0deg, rgb(117 129 141 / 0.55) 36deg, rgb(169 179 190 / 0.8) 70deg, rgb(204 214 222 / 0.92) 100deg, #eef3f7 120deg, rgb(204 214 222 / 0.92) 140deg, rgb(169 179 190 / 0.8) 170deg, rgb(117 129 141 / 0.55) 204deg, transparent 240deg);
+    -webkit-mask-image: radial-gradient(closest-side, transparent 85%, rgb(0 0 0 / 0.45) 86.6%, #000 90.5%, #000 93.5%, rgb(0 0 0 / 0.55) 97%, transparent 98.8%);
+    mask-image: radial-gradient(closest-side, transparent 85%, rgb(0 0 0 / 0.45) 86.6%, #000 90.5%, #000 93.5%, rgb(0 0 0 / 0.55) 97%, transparent 98.8%);
+    filter: blur(1.4px);
+    opacity: 0;
+  }
+  /* A onda de luz que sai do anel a cada pulso. */
+  .orb__pulse {
+    box-shadow: 0 0 0 1.5px rgb(234 240 245 / 0.55), 0 0 38px 4px rgb(204 214 222 / 0.35), inset 0 0 32px rgb(204 214 222 / 0.18);
+    opacity: 0;
+  }
+  .orb .sparkles { position: absolute; inset: 0; }
+  .sparkles svg { position: absolute; translate: -50% -50%; fill: var(--text); opacity: 0.55; }
+
+  /* Feixes de luz diagonais vindos do canto. */
+  .hero__rays { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .hero__rays span {
+    --k: 1;
+    position: absolute;
+    top: -34%;
+    height: 150%;
+    transform-origin: 50% 0;
+    rotate: -36deg;
+    background: linear-gradient(to bottom, rgb(234 240 245 / calc(var(--k) * 0.15)), rgb(234 240 245 / calc(var(--k) * 0.05)) 42%, transparent 72%);
+    filter: blur(16px);
+  }
+  .hero__rays span:nth-child(1) { left: 4%; width: 120px; }
+  .hero__rays span:nth-child(2) { left: 12%; width: 54px; --k: 0.8; animation-delay: -3s !important; }
+  .hero__rays span:nth-child(3) { left: 19%; width: 190px; --k: 0.55; animation-delay: -5.5s !important; }
+  @media (max-width: 640px) {
+    .hero__rays span { --k: 0.6; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .js .orb { animation: orb-rise 2000ms cubic-bezier(0.22, 1, 0.36, 1) 900ms both, orb-fire 2300ms cubic-bezier(0.4, 0, 0.3, 1) 1200ms both; }
+    .js .orb__bloom { animation: orb-light 1400ms ease-out 1900ms both, glow-beat 3.6s ease-in-out 3600ms infinite; }
+    .js .orb__hole { animation: orb-glow 1600ms ease-out 1300ms both; }
+    .js .orb__rim { animation: orb-light 900ms ease-out 2100ms both, rim-beat 3.6s ease-in-out 3600ms infinite; }
+    .js .orb__pulse { animation: orb-pulse 3.6s cubic-bezier(0.2, 0.6, 0.3, 1) 3600ms infinite; }
+    .orb__fireglow { animation: glow-beat 3.6s ease-in-out 3600ms infinite; }
+    .orb .sparkles svg,
+    .sparkles svg { animation: twinkle 4.2s ease-in-out infinite; }
+    .hero__rays span { animation: ray 9s ease-in-out infinite alternate; }
+  }
+  @keyframes orb-rise { from { translate: -50% 30%; } }
+  @keyframes glow-beat { 0%, 100% { opacity: 0.5; } 18% { opacity: 1; } }
+  @keyframes rim-beat { 0%, 100% { opacity: 0.7; } 18% { opacity: 1; } }
+  @keyframes orb-pulse { 0% { opacity: 0; scale: 0.99; } 14% { opacity: 0.9; } 100% { opacity: 0; scale: 1.14; } }
+  @keyframes orb-fire { from { --fire: 0deg; } to { --fire: 175deg; } }
+  @keyframes orb-light { from { opacity: 0; } }
+  @keyframes orb-glow { from { filter: brightness(0.35); } }
+  @keyframes orb-drift { from { --drift: -6deg; } to { --drift: 8deg; } }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.12; scale: 0.55; }
+    50% { opacity: 0.9; scale: 1; }
+  }
+  @keyframes ray { from { opacity: 1; } to { opacity: 0.4; } }
+}
+
+/* ───────────── Palco preso na tela enquanto a pessoa rola (scrollytelling do topo) ─────────────
+   .stage-pin é o trilho: o palco (.stage) fica "grudado" (sticky) enquanto o trilho passa, e a
+   rolagem move a janela e o celular para os lados do planeta (Hero.tsx). */
+@layer components {
+  /* Largura do palco: a da coluna, no máximo 1040px, e também limitada pela altura da tela
+     (planeta + janela precisam caber inteiros enquanto o palco fica preso). */
+  .hero { --stage-w: min(100cqi, 1040px, calc((100vh - 90px) / 0.92)); }
+  @media (min-width: 1000px) {
+    .hero { --stage-w: min(100cqi, 1040px, calc((100vh - 90px) / 0.8)); }
+  }
+  .stage-pin { position: relative; width: 100%; max-width: var(--stage-w); margin-inline: auto; }
+  .stage-pin__run { height: 0; pointer-events: none; }
+  @media (min-width: 1000px) {
+    .stage-pin { grid-column: 1 / 13; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    /* clip (e não hidden) para o sticky funcionar: hidden transformaria o topo numa área de rolagem. */
+    .hero { overflow: clip; }
+    .stage { position: sticky; top: clamp(96px, calc(50vh - 150px), 300px); }
+    .stage-pin__run { height: 55vh; }
+    @media (min-width: 1000px) {
+      .stage { top: clamp(110px, calc(100vh - 640px), 260px); }
+      .stage-pin__run { height: 65vh; }
+    }
+  }
+}
+
+/* ───────────── Frase no meio do planeta (aparece quando a janela vai para o canto) ───────────── */
+@layer components {
+  .stage__phrase {
+    position: absolute;
+    z-index: 0;
+    left: 45%;
+    /* centro do anel: o planeta começa 20% acima do palco, então o meio fica a 30% do diâmetro */
+    top: calc(var(--stage-w) * var(--orb-w) * 0.26);
+    width: calc(var(--stage-w) * var(--orb-w) * 0.6);
+    translate: -50% -50%;
+    display: grid;
+    gap: 12px;
+    justify-items: center;
+    text-align: center;
+    pointer-events: none;
+  }
+  @media (min-width: 1000px) {
+    .stage__phrase { left: 50%; width: calc(var(--stage-w) * var(--orb-w) * 0.64); gap: 16px; }
+  }
+  .stage__phrase-t {
+    font-size: clamp(1.3rem, 0.85rem + 2.3vw, 2.9rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--text);
+    text-wrap: balance;
+    text-shadow: 0 0 42px rgb(204 214 222 / 0.28);
+  }
+  .stage__phrase-s {
+    max-width: 34ch;
+    font-size: clamp(0.8125rem, 0.75rem + 0.3vw, 1.0625rem);
+    line-height: 1.5;
+    color: var(--text-2);
+  }
+}

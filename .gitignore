@@ -1,0 +1,13 @@
+# Skills de terceiros baixadas com --dentro (nunca versionadas aqui)
+skills/orbit/skills/*
+!skills/orbit/skills/README.md
+
+# Instalação local com --projeto
+.claude/
+
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*

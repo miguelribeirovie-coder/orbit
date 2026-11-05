@@ -1,0 +1,15 @@
+{
+  "name": "word-mnr",
+  "description": "Skills da Word MNR para criar sites com o Claude Code",
+  "owner": {
+    "name": "Word MNR",
+    "url": "https://github.com/miguelribeirovie-coder"
+  },
+  "plugins": [
+    {
+      "name": "orbit",
+      "source": "./",
+      "description": "Do briefing ao site no ar, com as 16 melhores skills de design num método só."
+    }
+  ]
+}

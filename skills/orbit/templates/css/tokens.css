@@ -1,0 +1,39 @@
+/* Tokens do site Word MNR (paleta da logo, tipos, espaços). Troque pelos do novo cliente. */
+/* ───────────── Tokens: a paleta da logo (Grafite, Gelo, Névoa, Aço) ───────────── */
+:root {
+  color-scheme: dark;
+  --g0: #23272c;      /* Grafite da logo: fundo principal */
+  --g1: #1d2024;      /* seções alternadas, um degrau abaixo */
+  --g2: #2c3137;      /* painéis, um degrau acima */
+  --g3: #383e45;      /* elementos elevados */
+  --g-deep: #181b1f;  /* rodapé */
+  --text: #eaf0f5;    /* Gelo da logo */
+  --text-2: #a9b3be;  /* entre Névoa e Aço */
+  --text-3: #8c97a3;  /* campos vazios */
+  --ice: #eaf0f5;     /* ação principal: Gelo */
+  --ice-ink: #23272c;
+  --mist: #ccd6de;    /* Névoa da logo: progresso, pontos, foco */
+  --steel: #75818d;   /* Aço da logo: a barra, detalhes */
+  --line: rgb(234 240 245 / 0.08);
+  --line-2: rgb(234 240 245 / 0.14);
+  --focus: rgb(204 214 222 / 0.55);
+
+  --sans: "Geist Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", monospace;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-long: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Cinco tamanhos. */
+  --step-small: 0.8125rem;
+  --step-body: 1.0625rem;
+  --step-lead: clamp(1.25rem, 1.08rem + 0.55vw, 1.5rem);
+  --step-head: clamp(2.25rem, 1.3rem + 3.1vw, 4rem);
+  --step-display: clamp(3rem, 1.4rem + 5.6vw, 6.25rem);
+
+  --m: clamp(20px, 4vw, 48px);
+  --max: 1240px;
+  --section: clamp(96px, 11vw, 168px);
+  --radius: 24px;
+}
+

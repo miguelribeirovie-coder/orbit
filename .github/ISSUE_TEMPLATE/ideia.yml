@@ -1,0 +1,23 @@
+name: Ideia ou lição nova
+description: Uma melhoria no método, uma lição de cliente ou uma skill que merece entrar
+labels: [ideia]
+body:
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: Tipo
+      options:
+        - Lição de cliente (aprovado, rejeitado, armadilha)
+        - Melhoria numa fase do método
+        - Skill nova para incluir
+        - Modelo de código novo
+        - Outra coisa
+    validations:
+      required: true
+  - type: textarea
+    id: ideia
+    attributes:
+      label: A ideia
+      description: O que muda e por quê. Se for uma skill, mande o link do repositório e a licença.
+    validations:
+      required: true

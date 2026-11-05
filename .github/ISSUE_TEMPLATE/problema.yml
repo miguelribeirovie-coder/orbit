@@ -1,0 +1,29 @@
+name: Algo não funcionou
+description: O instalador, a skill ou um modelo deu erro ou fez algo errado
+labels: [problema]
+body:
+  - type: textarea
+    id: oque
+    attributes:
+      label: O que aconteceu
+      description: O que você pediu, o que esperava e o que veio.
+    validations:
+      required: true
+  - type: textarea
+    id: saida
+    attributes:
+      label: Mensagem de erro ou saída
+      description: Cole a saída do comando ou um print. Para o instalador, rode com ORBIT_DEBUG=1.
+      render: text
+  - type: input
+    id: sistema
+    attributes:
+      label: Sistema e versões
+      placeholder: "Windows 11, Node 22.11, Claude Code 2.x"
+    validations:
+      required: true
+  - type: textarea
+    id: verificar
+    attributes:
+      label: Resultado de "baixar-skills.mjs --verificar"
+      render: text

@@ -1,0 +1,31 @@
+name: lançar
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  pacote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Conferir
+        run: node skills/orbit/ferramentas/verificar.mjs
+      - name: Montar o pacote
+        run: |
+          mkdir -p dist
+          zip -qr "dist/orbit-${GITHUB_REF_NAME}.zip" skills/orbit README.md LICENSE CREDITOS.md instalar.mjs instalar.sh instalar.ps1
+      - name: Publicar o lançamento
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          notas=$(awk -v v="${GITHUB_REF_NAME#v}" '$0 ~ "^## \\[" v "\\]" {f=1; next} /^## \[/ {f=0} f' CHANGELOG.md)
+          gh release create "$GITHUB_REF_NAME" dist/*.zip --title "Orbit $GITHUB_REF_NAME" --notes "$notas
+
+          Instale com \`node instalar.mjs\` depois de descompactar, ou veja o README."

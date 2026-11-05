@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ccd6de" stop-opacity="0.32"/><stop offset="1" stop-color="#ccd6de" stop-opacity="0"/></radialGradient>
+    <radialGradient id="corpo" cx="0.36" cy="0.3" r="0.85"><stop offset="0" stop-color="#383e45"/><stop offset="0.6" stop-color="#23272c"/><stop offset="1" stop-color="#181b1f"/></radialGradient>
+    <linearGradient id="borda" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eaf0f5" stop-opacity="0.95"/><stop offset="0.5" stop-color="#ccd6de" stop-opacity="0.25"/><stop offset="1" stop-color="#75818d" stop-opacity="0.05"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#1d2024"/>
+  <circle cx="256" cy="256" r="220" fill="url(#halo)"/>
+  <path d="M 66 256 A 190 42 0 0 1 446 256" fill="none" stroke="#ccd6de" stroke-opacity="0.25" stroke-width="7" transform="rotate(-16 256 256)"/>
+  <circle cx="256" cy="256" r="122" fill="url(#corpo)"/>
+  <circle cx="256" cy="256" r="122" fill="none" stroke="url(#borda)" stroke-width="7"/>
+  <path d="M 66 256 A 190 42 0 0 0 446 256" fill="none" stroke="#eaf0f5" stroke-opacity="0.75" stroke-width="8" transform="rotate(-16 256 256)"/>
+  <circle cx="83" cy="318" r="13" fill="#eaf0f5"/>
+</svg>

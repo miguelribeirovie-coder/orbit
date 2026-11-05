@@ -1,0 +1,430 @@
+/* Elementos inspirados no vídeo de referência: diferenciais em grade (bento), selo do contrato,
+   brilho que segue o mouse e borda animada do cartão em destaque. Tudo em Gelo, Névoa e Aço. */
+
+@property --seal-a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+@layer components {
+  /* ───────────── Diferenciais em grade (bento) ───────────── */
+  @media (min-width: 960px) { .about { align-items: center; } }
+  .bento { list-style: none; margin: clamp(56px, 7vw, 96px) 0 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 960px) {
+    .bento { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .bento__card:nth-child(1), .bento__card:nth-child(4) { grid-column: span 7; }
+    .bento__card:nth-child(2), .bento__card:nth-child(3) { grid-column: span 5; }
+  }
+  .bento__card { padding: 10px 10px 26px; display: grid; gap: 22px; align-content: start; overflow: hidden; }
+  .bento__ui {
+    position: relative;
+    height: 250px;
+    border-radius: 16px;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(120% 90% at 50% 0%, rgb(204 214 222 / 0.1), transparent 62%), var(--g1);
+    border: 1px solid var(--line);
+  }
+  .bento__ui::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgb(234 240 245 / 0.08) 1px, transparent 1px);
+    background-size: 16px 16px;
+    -webkit-mask-image: radial-gradient(80% 80% at 50% 30%, #000, transparent);
+    mask-image: radial-gradient(80% 80% at 50% 30%, #000, transparent);
+    pointer-events: none;
+  }
+  .bento__txt { padding: 0 18px; display: grid; gap: 8px; }
+  .bento__txt p { color: var(--text-2); max-width: 46ch; }
+  .bento__note { margin-top: 20px; text-align: center; font-size: var(--step-small); color: var(--text-2); }
+
+  /* Conversa */
+  .chat { position: relative; width: min(420px, 88%); display: grid; gap: 9px; font-size: 0.875rem; line-height: 1.4; }
+  .chat__head { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .chat__av { width: 32px; height: 32px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--ice); color: var(--ice-ink); font-weight: 600; font-size: 0.8125rem; }
+  .chat__who { display: grid; line-height: 1.25; }
+  .chat__who b { font-weight: 500; font-size: 0.8125rem; }
+  .chat__who small { display: inline-flex; align-items: center; gap: 5px; color: var(--text-2); font-size: 0.75rem; }
+  .chat__on { width: 6px; height: 6px; border-radius: 50%; background: var(--mist); box-shadow: 0 0 0 3px rgb(204 214 222 / 0.15); }
+  .chat__b { max-width: 82%; padding: 8px 13px; border-radius: 16px; }
+  .chat__b--in { justify-self: start; background: var(--g3); border-bottom-left-radius: 5px; }
+  .chat__b--out { justify-self: end; background: var(--ice); color: var(--ice-ink); border-bottom-right-radius: 5px; }
+  .chat__typing { justify-self: start; display: inline-flex; gap: 4px; padding: 10px 12px; border-radius: 14px; background: rgb(234 240 245 / 0.08); }
+  .chat__typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--text-2); }
+
+  /* Selo do contrato: anel aceso + escudo */
+  .seal { position: relative; width: 210px; aspect-ratio: 1; display: grid; place-items: center; }
+  .seal > span:not(.sparkles):not(.seal__chip) { position: absolute; border-radius: 50%; }
+  .seal__glow { inset: 10%; background: radial-gradient(closest-side, rgb(204 214 222 / 0.4), rgb(204 214 222 / 0.08) 70%, transparent); filter: blur(16px); }
+  .seal__ring {
+    inset: 16%;
+    padding: 3px;
+    background: conic-gradient(from var(--seal-a), rgb(234 240 245 / 0.08), #fff 22%, rgb(204 214 222 / 0.25) 42%, rgb(234 240 245 / 0.08) 58%, #fff 80%, rgb(234 240 245 / 0.08));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  }
+  .seal__orbit { inset: 3%; border: 1px dashed rgb(234 240 245 / 0.18); }
+  .seal__shield { position: relative; width: 66px; height: auto; filter: drop-shadow(0 12px 16px rgb(0 0 0 / 0.55)) drop-shadow(0 0 18px rgb(204 214 222 / 0.35)); }
+  .seal .sparkles { position: absolute; inset: -8%; }
+  .seal__chip { position: absolute; bottom: -2px; left: 50%; translate: -50% 0; }
+  .seal__chip,
+  .chip-float {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text);
+    background: rgb(56 62 69 / 0.9);
+    border: 1px solid var(--line-2);
+    box-shadow: 0 12px 24px -12px rgb(0 0 0 / 0.8);
+  }
+  .seal__chip svg { width: 13px; height: 13px; stroke-width: 3; }
+  .chip-float svg { width: 12px; height: 12px; fill: var(--mist); }
+
+  /* Etapas da entrega */
+  .steps { position: relative; width: min(380px, 84%); }
+  .steps ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .steps__row { display: grid; grid-template-columns: 22px 76px 1fr; align-items: center; gap: 12px; font-size: 0.875rem; }
+  .steps__dot { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line-2); }
+  .steps__dot svg { width: 13px; height: 13px; stroke-width: 3; }
+  .is-feito .steps__dot { background: var(--ice); color: var(--ice-ink); border-color: transparent; }
+  .is-agora .steps__dot { border-color: var(--mist); box-shadow: 0 0 0 4px rgb(204 214 222 / 0.14); }
+  .is-depois { color: var(--text-2); }
+  .steps__bar { height: 6px; border-radius: 99px; background: rgb(234 240 245 / 0.08); overflow: hidden; }
+  .steps__bar span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--steel), var(--ice)); transform-origin: 0 50%; }
+  .is-feito .steps__bar--empty { background: rgb(234 240 245 / 0.4); }
+  .steps .chip-float { position: absolute; right: -10px; top: -30px; }
+
+  /* Pedidos da manutenção */
+  .tickets { width: min(460px, 88%); display: grid; gap: 10px; font-size: 0.875rem; }
+  .tickets__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .tickets__head b { font-weight: 500; }
+  .tickets__head span { font-family: var(--mono); font-size: 0.75rem; color: var(--text-2); }
+  .tickets ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .tickets li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; background: rgb(44 49 55 / 0.75); border: 1px solid var(--line); }
+  .pill { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 0.75rem; }
+  .pill--ok { background: rgb(234 240 245 / 0.1); color: var(--text); }
+  .pill--now { background: var(--ice); color: var(--ice-ink); font-weight: 500; }
+  .pill--now::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .chat__typing i { animation: typing 1.2s ease-in-out infinite; }
+    .chat__typing i:nth-child(2) { animation-delay: 0.15s; }
+    .chat__typing i:nth-child(3) { animation-delay: 0.3s; }
+    .seal__ring { animation: spin-slow 6s linear infinite; }
+    .seal__orbit { animation: spin-slow 40s linear infinite reverse; }
+    .seal__shield { animation: float 4.5s ease-in-out infinite alternate; }
+    .seal__glow { animation: breathe 3.5s ease-in-out infinite alternate; }
+    .is-agora .steps__dot,
+    .pill--now::before { animation: pulse 1.6s ease-in-out infinite; }
+  }
+  @keyframes typing { 0%, 60%, 100% { translate: 0 0; opacity: 0.45; } 30% { translate: 0 -4px; opacity: 1; } }
+  @keyframes seal-spin { to { --seal-a: 360deg; } }
+  @keyframes spin-slow { to { rotate: 360deg; } }
+  @keyframes float { from { translate: 0 -4px; rotate: -3deg; } to { translate: 0 4px; rotate: 3deg; } }
+  @keyframes breathe { from { opacity: 1; } to { opacity: 0.55; } }
+  @keyframes pulse { 50% { opacity: 0.45; } }
+
+  /* ───────────── Brilho que segue o mouse nos cartões ───────────── */
+  .spot { position: relative; }
+  .spot::after,
+  .spot::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 350ms ease; }
+  .spot::after { z-index: 3; background: radial-gradient(340px circle at var(--mx, 50%) var(--my, 50%), rgb(234 240 245 / 0.06), transparent 62%); }
+  .spot::before {
+    z-index: 3;
+    padding: 1px;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgb(234 240 245 / 0.55), transparent 65%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .spot:hover::after,
+    .spot:hover::before { opacity: 1; }
+  }
+
+  /* ───────────── Borda de luz girando no serviço em destaque ─────────────
+     O anel de 1px é uma máscara fixa; o que gira é um quadrado com o degradê, só com transform
+     (a placa de vídeo faz o trabalho, sem redesenhar a cada quadro). */
+  .plan--featured { box-shadow: 0 0 70px -24px rgb(204 214 222 / 0.4); }
+  .beam {
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  }
+  .beam::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 220%;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    background: conic-gradient(transparent 0deg, rgb(234 240 245 / 0.95) 40deg, rgb(204 214 222 / 0.3) 70deg, transparent 110deg, transparent 180deg, rgb(234 240 245 / 0.6) 220deg, transparent 260deg);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .beam::before { animation: spin-slow 7s linear infinite; }
+  }
+
+  /* ───────────── Como funciona: etapas ligadas por uma linha de luz ───────────── */
+  .flow { --p: 0; --node: 52px; --g: 16px; position: relative; margin-top: clamp(48px, 6vw, 80px); }
+  .flow__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; position: relative; }
+  .flow__step { position: relative; display: grid; grid-template-columns: var(--node) 1fr; gap: 16px; align-items: start; }
+  .flow__node {
+    position: relative;
+    z-index: 1;
+    width: var(--node);
+    height: var(--node);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: var(--text-3);
+    background: var(--g1);
+    border: 1px solid var(--line-2);
+    transition: color 400ms ease, border-color 400ms ease, box-shadow 600ms var(--ease-out), background-color 400ms ease;
+  }
+  .flow__node svg { width: 22px; height: 22px; stroke-width: 1.75; }
+  .flow__node::after {
+    content: "";
+    position: absolute;
+    inset: -7px;
+    border-radius: 50%;
+    border: 1px solid rgb(204 214 222 / 0.5);
+    opacity: 0;
+    scale: 0.8;
+  }
+  .flow__step[data-on="true"] .flow__node {
+    color: var(--ice-ink);
+    background: var(--ice);
+    border-color: transparent;
+    box-shadow: 0 0 0 6px rgb(204 214 222 / 0.1), 0 0 28px 2px rgb(204 214 222 / 0.45);
+  }
+  .flow__card { padding: 22px 22px 24px; display: grid; gap: 10px; align-content: start; transition: border-color 500ms ease, background-color 500ms ease; }
+  .flow__step[data-on="true"] .flow__card { border-color: rgb(204 214 222 / 0.22); }
+  .flow__top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .flow__num { font-family: var(--mono); font-size: var(--step-small); color: var(--text-2); letter-spacing: 0.04em; }
+  .flow__step[data-on="true"] .flow__num { color: var(--text); }
+  .flow__who { font-size: 0.75rem; color: var(--text-2); padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line-2); white-space: nowrap; }
+  .flow__card p { color: var(--text-2); }
+
+  /* A linha: vertical no celular (à esquerda), horizontal no computador (passando pelos ícones). */
+  .flow__track {
+    position: absolute;
+    left: calc(var(--node) / 2 - 1px);
+    top: calc(var(--node) / 2);
+    height: var(--len, 0px);
+    width: 2px;
+    border-radius: 2px;
+    background: rgb(234 240 245 / 0.1);
+  }
+  .flow__fill {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(to bottom, var(--steel), var(--ice));
+    transform-origin: 50% 0;
+    transform: scaleY(var(--p));
+    box-shadow: 0 0 12px rgb(204 214 222 / 0.5);
+  }
+  .flow__head { position: absolute; inset: 0; transform: translateY(calc(var(--p) * 100%)); }
+  .flow__head i {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgb(234 240 245 / 0.18), 0 0 22px 6px rgb(204 214 222 / 0.7);
+  }
+  @media (min-width: 960px) {
+    .flow__list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--g); }
+    .flow__step { grid-template-columns: 1fr; grid-template-rows: auto 1fr; justify-items: center; gap: 22px; }
+    .flow__card { width: 100%; height: 100%; }
+    .flow__track {
+      left: calc((100% - 3 * var(--g)) / 8);
+      right: calc((100% - 3 * var(--g)) / 8);
+      top: calc(var(--node) / 2 - 1px);
+      width: auto;
+      height: 2px;
+    }
+    .flow__fill { background: linear-gradient(to right, var(--steel), var(--ice)); transform-origin: 0 50%; transform: scaleX(var(--p)); }
+    .flow__head { transform: translateX(calc(var(--p) * 100%)); }
+    .flow__head i { left: 0; top: 50%; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .flow__step[data-on="true"] .flow__node::after { animation: ripple 900ms var(--ease-out) both; }
+  }
+  @keyframes ripple { 0% { opacity: 0.9; scale: 0.8; } 100% { opacity: 0; scale: 1.5; } }
+
+  /* ───────────── Chamada final: campo de mensagem + horizonte aceso ───────────── */
+  .final { padding-bottom: clamp(140px, 16vw, 220px); }
+  .composer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: min(560px, 100%);
+    margin-top: 12px;
+    padding: 8px 8px 8px 10px;
+    border-radius: 999px;
+    border-color: var(--line-2);
+    text-align: left;
+    transition: border-color 200ms ease, background-color 200ms ease, transform 140ms var(--ease-out);
+  }
+  .composer:active { transform: scale(0.985); }
+  .composer__id { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .composer__av { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 50%; background: var(--g3); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-2); }
+  .composer__av svg { width: 20px; height: 20px; }
+  .composer__txt { display: grid; line-height: 1.25; min-width: 0; }
+  .composer__txt b { font-weight: 600; letter-spacing: -0.01em; }
+  .composer__txt small { color: var(--text-2); font-size: var(--step-small); }
+  .composer .btn { flex: none; pointer-events: none; }
+  @media (hover: hover) and (pointer: fine) {
+    .composer:hover { border-color: rgb(204 214 222 / 0.4); }
+    .composer:hover .btn { background: #fff; }
+    .composer:hover .arrow { transform: translateX(3px); }
+  }
+  @media (max-width: 560px) {
+    .composer { flex-direction: column; align-items: stretch; border-radius: 24px; padding: 14px; gap: 14px; }
+    .composer__id { justify-content: center; }
+    .composer .btn { width: 100%; }
+  }
+  .final__alt { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 14px; font-size: var(--step-small); color: var(--text-2); }
+
+  /* O mesmo planeta do topo volta como horizonte no fim do site, ligado à rolagem:
+     quanto mais a pessoa desce, mais ele sobe e mais a luz corre pela borda (--fp, de 0 a 1,
+     vem de Chamada.tsx). No fim da página fica todo aceso e um reflexo passeia pela curva.
+     Sem JavaScript ou com movimento reduzido, --fp fica em 1: tudo aceso, parado. */
+  .final { --fp: 1; }
+  .final__sky { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; overflow: hidden; pointer-events: none; }
+  .final__horizon {
+    --vis: clamp(80px, 10vw, 140px);
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: min(1200px, 150vw);
+    aspect-ratio: 1;
+    translate: -50% calc(100% - var(--vis) * var(--fp));
+    border-radius: 50%;
+    pointer-events: none;
+    /* A luz de dentro some antes do pé da seção: o corpo chega no rodapé com a mesma cor dele. */
+    background: radial-gradient(44% calc(var(--vis) * 0.8) at 50% 0%, rgb(204 214 222 / 0.2), transparent), var(--g-deep);
+  }
+  .final__horizon > span { position: absolute; inset: 0; border-radius: 50%; }
+  /* Brilho difuso acima da curva: acende junto com a subida. */
+  .final__glow {
+    box-shadow: 0 -14px 60px -8px rgb(204 214 222 / 0.42), 0 -2px 18px -2px rgb(234 240 245 / 0.38);
+    opacity: var(--fp);
+  }
+  /* Linha fina e fria que sempre aparece. */
+  .final__line { box-shadow: inset 0 1px 0 0 rgb(234 240 245 / 0.28); }
+  /* A borda acesa, revelada da esquerda para a direita conforme a rolagem. */
+  .final__rim {
+    --hz: calc(var(--fp) * 190deg);
+    background: radial-gradient(closest-side, transparent 98.2%, rgb(234 240 245 / 0.3) 99%, #fff 99.65%, transparent 100%);
+    -webkit-mask-image: conic-gradient(from -95deg, #000 0deg, #000 var(--hz), transparent calc(var(--hz) + 26deg));
+    mask-image: conic-gradient(from -95deg, #000 0deg, #000 var(--hz), transparent calc(var(--hz) + 26deg));
+  }
+  /* O reflexo: um ponto de luz no anel que gira de um lado para o outro (só transform). Aparece no fim. */
+  .final__glint {
+    background: conic-gradient(from -18deg, transparent 0deg, rgb(255 255 255 / 0.95) 18deg, transparent 36deg, transparent 360deg);
+    -webkit-mask-image: radial-gradient(closest-side, transparent 98.6%, #000 99.4%, transparent 100%);
+    mask-image: radial-gradient(closest-side, transparent 98.6%, #000 99.4%, transparent 100%);
+    filter: blur(1px) drop-shadow(0 0 8px #fff);
+    opacity: clamp(0, (var(--fp) - 0.82) * 5.5, 0.95);
+  }
+  .final__sky .sparkles { position: absolute; inset: 0; opacity: var(--fp); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .final__glint { animation: glint 7s ease-in-out infinite alternate; }
+  }
+  @keyframes glint { from { rotate: -30deg; } to { rotate: 30deg; } }
+
+  /* ───────────── Desempenho ───────────── */
+  /* Seções fora da tela: animações em CSS pausadas (a classe vem de usePauseOffscreen). */
+  [data-off] *,
+  [data-off] *::before,
+  [data-off] *::after { animation-play-state: paused !important; }
+
+
+  /* Cada site de exemplo é isolado: o que muda dentro dele não faz o navegador recalcular a página. */
+  .vp { contain: layout paint style; }
+  .vt { contain: layout paint style; }
+  /* Miniaturas da vitrine: as animações internas dos sites (poste de barbeiro, faixas correndo) ficam
+     paradas; nesse tamanho não aparecem e só custariam redesenho a cada quadro. */
+  .vt .vp *,
+  .vt .vp *::before,
+  .vt .vp *::after { animation: none !important; transition: none !important; }
+
+  /* Celular e telas de toque: menos desfoque (é o que mais pesa para desenhar). */
+  @media (max-width: 999px), (hover: none) {
+    .js .hero [data-in] { filter: none !important; }
+    .orb__fire, .orb__low, .final__glint { filter: none; }
+    .seal__shield { filter: drop-shadow(0 10px 14px rgb(0 0 0 / 0.5)); }
+  }
+
+  /* No celular e em telas de toque, o vidro fica sólido: o desfoque por trás custa caro na rolagem. */
+  @media (max-width: 640px), (hover: none) {
+    .glass { background: rgb(44 49 55 / 0.88); backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .hero__rays span:nth-child(3) { display: none; }
+  }
+}
+
+/* Rodapé: créditos das fotos num link discreto que abre a lista. */
+@layer components {
+  .foot__base { align-items: baseline; }
+  .foot__credits { margin: 0; max-width: none; flex-basis: 100%; }
+  .foot__credits summary { display: inline-block; cursor: pointer; list-style: none; color: var(--text-2); text-decoration: underline; text-decoration-color: var(--steel); text-underline-offset: 4px; }
+  .foot__credits summary::-webkit-details-marker { display: none; }
+  .foot__credits summary:hover { color: var(--text); }
+  .foot__credits p { margin-top: 10px; max-width: 110ch; font-size: 0.75rem; line-height: 1.6; color: var(--text-2); }
+  @media (min-width: 900px) {
+    .foot__credits { flex-basis: auto; }
+    .foot__credits[open] { flex-basis: 100%; order: 3; }
+  }
+}
+
+/* ───────────── Fluidez: nada de travar ao rolar ─────────────
+   O que se move com a rolagem ganha camada própria na placa de vídeo (só é deslocado, não redesenhado). */
+@layer components {
+  @media (prefers-reduced-motion: no-preference) {
+    .stage__tilt,
+    .stage__win,
+    .stage__phone,
+    .stage__phrase,
+    .orb,
+    .final__horizon,
+    .flow__fill,
+    .flow__head { will-change: transform; }
+    .final__glow,
+    .final__glint,
+    .final__sky .sparkles { will-change: opacity; }
+  }
+
+  /* Celular e telas de toque: menu sólido (o desfoque por trás do menu fixo é refeito a cada quadro de
+     rolagem) e a borda do horizonte acende por opacidade, sem máscara recalculada. */
+  @media (max-width: 999px), (hover: none) {
+    .nav { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgb(35 39 44 / 0.97); }
+    .nav[data-scrolled="true"] { background: rgb(29 32 36 / 0.98); }
+    .final__rim { -webkit-mask-image: none; mask-image: none; opacity: var(--fp); }
+    /* Os feixes de luz diagonais são camadas grandes e desfocadas: no celular, ficam de fora. */
+    .hero__rays { display: none; }
+  }
+  /* No celular o planeta nasce sem a varredura de luz (ela redesenha o anel inteiro a cada quadro). */
+  @media (prefers-reduced-motion: no-preference) and (max-width: 999px), (prefers-reduced-motion: no-preference) and (hover: none) {
+    .js .orb { animation: orb-rise 1900ms cubic-bezier(0.22, 1, 0.36, 1) 900ms both; }
+    .js .orb__fire { animation: orb-light 1500ms ease-out 1300ms both; }
+  }
+}
